@@ -1,0 +1,3 @@
+void initTemperature();
+
+int getTemperature();

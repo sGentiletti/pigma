@@ -1,0 +1,3 @@
+void initSequence();
+
+void sequence();
