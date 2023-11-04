@@ -20,37 +20,29 @@ void initSequence() {
 void sequence() {
   preHeatText();
   startBlower();
-  for (int i = 0; i < WAIT_FOR_HEAT_TIME; i++) {  // Wait until start heating
-    updateDisplay();
-  }
+  updateDisplay(WAIT_FOR_HEAT_TIME);  // Wait until start heating
   startHeater();
   dissectText();
-  for (int i = 0; i < PRE_HEAT_TIME; i++) {  // Pre-heating time
-    updateDisplay();
-  }
+  updateDisplay(PRE_HEAT_TIME);  // Pre-heating time
   isHeatingOn = true;
-  for (int i = 0; i < HEAT_TIME; i++) {  // Heating time
-    updateDisplay();
-  }
+  updateDisplay(HEAT_TIME);  // Heating time
   stopHeater();
   isHeatingOn = false;
   coldSystemText();
-  for (int i = 0; i < WAIT_FOR_BLOW_TIME; i++) {  // Wait until stop blown
-    updateDisplay();
-  }
+  updateDisplay(WAIT_FOR_BLOW_TIME);  // Wait until stop blown
   stopBlower();
-  for (int i = 0; i < COLD_SYSTEM_TIME; i++) {  // Wait for cold the system
-    updateDisplay();
-  }
+  updateDisplay(COLD_SYSTEM_TIME);  // Wait for cold the system
 }
 
 void (*resetSoftware)(void) = 0;
 
-void updateDisplay() {
-  timeText(totalTime);
-  temperatureText(getTemperature());
-  delay(1000);
-  totalTime--;
+void updateDisplay(int time) {
+  for (int i = 0; i < time; i++) {
+    timeText(totalTime);
+    temperatureText(getTemperature());
+    delay(1000);
+    totalTime--;
+  }
 }
 
 void abortSequence() {
