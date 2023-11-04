@@ -1,23 +1,23 @@
-int BUTTON = 2;
-int CW = 3;
-int CCW = 4;
+int BUTTON_PIN = 2;
+int CW_PIN = 3;
+int CCW_PIN = 4;
 
 void initEncoder() {
-  pinMode(BUTTON, INPUT_PULLUP);
-  pinMode(CW, INPUT);
-  pinMode(CCW, INPUT);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(CW_PIN, INPUT);
+  pinMode(CCW_PIN, INPUT);
 }
 
 boolean getButtonStatus() {
-  return digitalRead(BUTTON) == LOW;
+  return digitalRead(BUTTON_PIN) == LOW;
 }
 
 void enableEncoderInterruption() {
-  attachInterrupt(digitalPinToInterrupt(CW), encoder, LOW);
+  attachInterrupt(digitalPinToInterrupt(CW_PIN), encoder, LOW);
 }
 
 void disableEncoderInterruption() {
-  detachInterrupt(digitalPinToInterrupt(CW));
+  detachInterrupt(digitalPinToInterrupt(CW_PIN));
 }
 
 void encoder() {
@@ -25,7 +25,7 @@ void encoder() {
   unsigned long interruptionTime = millis();
 
   if (interruptionTime - lastInterruption > 5) {  // Previene lecturas erroneas del encoder
-    if (digitalRead(CCW) == HIGH) {
+    if (digitalRead(CCW_PIN) == HIGH) {
       actualPosition++;
     } else {
       actualPosition--;

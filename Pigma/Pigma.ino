@@ -4,21 +4,19 @@
 #include "Sequence.h"
 
 volatile int totalTime;
-volatile int actualPosition = 0;
+volatile int addressMemory = 0;  // Address EEPROM
 
+int error;
+int actualPosition = 0;
 int previousPosition = 0;
 int selectPosition = 0;
-
-volatile int addressMemory = 0;  // Address EEPROM
-volatile int error;
-
 boolean next = false;
 
 void setup() {
   initDisplay();
   initEncoder();
-  error = EEPROM.read(addressMemory);
   initSequence();
+  error = EEPROM.read(addressMemory);
 }
 
 void loop() {

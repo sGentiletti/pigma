@@ -1,11 +1,11 @@
 #include <DHT.h>
 #include <DHT_U.h>
 
-int SENSOR = 7;
+int SENSOR_TEMPERATURE_PIN = 7;
 int MAX_TEMPERATURE = 80;
 int MIN_TEMPERATURE = 10;
 
-DHT dht(SENSOR, DHT22);
+DHT dht(SENSOR_TEMPERATURE_PIN, DHT22);
 
 void initTemperature() {
   SREG = (SREG & 0b01111111);               // Desabilitar interrupciones

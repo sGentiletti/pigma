@@ -4,7 +4,7 @@
 
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7);  // DIR, E, RW, RS, D4, D5, D6, D7
 
-int LCD = 3;
+int LCD_PIN = 3;
 
 byte heart[8] = {
   0b00000,
@@ -29,7 +29,7 @@ byte arrowUp[8] = {
 };
 
 void initDisplay() {
-  lcd.setBacklightPin(LCD, POSITIVE);  // puerto P3 de PCF8574 como positivo
+  lcd.setBacklightPin(LCD_PIN, POSITIVE);  // puerto P3 de PCF8574 como positivo
   lcd.setBacklight(HIGH);              // habilita iluminacion posterior de LCD
   lcd.begin(16, 2);                    // 16 columnas por 2 lineas para LCD 1602A
   lcd.createChar(0, heart);

@@ -1,14 +1,14 @@
-int HEATER = 9;
+int HEATER_PIN = 9;
 
 void initHeater() {
-  pinMode(HEATER, OUTPUT);
+  pinMode(HEATER_PIN, OUTPUT);
   stopHeater();
 }
 
 void startHeater() {
-  digitalWrite(HEATER, LOW);
+  digitalWrite(HEATER_PIN, LOW);
 }
 
 void stopHeater() {
-  digitalWrite(HEATER, HIGH);
+  digitalWrite(HEATER_PIN, HIGH);
 }

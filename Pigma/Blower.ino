@@ -1,14 +1,14 @@
-int BLOWER = 8;
+int BLOWER_PIN = 8;
 
 void initBlower() {
-  pinMode(BLOWER, OUTPUT);
+  pinMode(BLOWER_PIN, OUTPUT);
   stopBlower();
 }
 
 void startBlower() {
-  digitalWrite(BLOWER, LOW);
+  digitalWrite(BLOWER_PIN, LOW);
 }
 
 void stopBlower() {
-  digitalWrite(BLOWER, HIGH);
+  digitalWrite(BLOWER_PIN, HIGH);
 }
