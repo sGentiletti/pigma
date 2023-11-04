@@ -4,11 +4,11 @@
 
 volatile boolean isHeatingOn = false;
 
-int WAIT_FOR_HEAT_TIME = 5;  // In seconds
-int PRE_HEAT_TIME = 5;       // In seconds
-int HEAT_TIME = 15;          // In seconds
-int WAIT_FOR_BLOW_TIME = 5;  // In seconds
-int COLD_SYSTEM_TIME = 5;    // In seconds
+int WAIT_FOR_HEAT_TIME = 15;  // In seconds
+int PRE_HEAT_TIME = 15;       // In seconds
+int HEAT_TIME = 1200;         // In seconds
+int WAIT_FOR_BLOW_TIME = 15;  // In seconds
+int COLD_SYSTEM_TIME = 120;   // In seconds
 
 void initSequence() {
   initTemperature();

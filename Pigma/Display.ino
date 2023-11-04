@@ -30,8 +30,8 @@ byte arrowUp[8] = {
 
 void initDisplay() {
   lcd.setBacklightPin(LCD_PIN, POSITIVE);  // puerto P3 de PCF8574 como positivo
-  lcd.setBacklight(HIGH);              // habilita iluminacion posterior de LCD
-  lcd.begin(16, 2);                    // 16 columnas por 2 lineas para LCD 1602A
+  lcd.setBacklight(HIGH);                  // habilita iluminacion posterior de LCD
+  lcd.begin(16, 2);                        // 16 columnas por 2 lineas para LCD 1602A
   lcd.createChar(0, heart);
   lcd.createChar(1, arrowUp);
   lcd.clear();
@@ -139,12 +139,13 @@ void temperatureText(int temp) {
 }
 
 void timeText(int totalTime) {
-  int minutes = totalTime / 60;
+  int hours = totalTime / 3600;
+  int minutes = (totalTime % 3600) / 60;
   int seconds = totalTime % 60;
 
-  char formattedTime[6];
-  sprintf(formattedTime, "%02d:%02d", minutes, seconds);
+  char formattedTime[9];
+  sprintf(formattedTime, "%02d:%02d:%02d", hours, minutes, seconds);
 
-  lcd.setCursor(11, 1);
+  lcd.setCursor(8, 1);
   lcd.print(formattedTime);
 }
