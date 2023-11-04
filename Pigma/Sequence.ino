@@ -14,7 +14,6 @@ void initSequence() {
   initTemperature();
   initBlower();
   initHeater();
-  totalTime = WAIT_FOR_HEAT_TIME + PRE_HEAT_TIME + HEAT_TIME + WAIT_FOR_BLOW_TIME + COLD_SYSTEM_TIME;
 }
 
 void sequence() {
@@ -35,6 +34,10 @@ void sequence() {
 }
 
 void (*resetSoftware)(void) = 0;
+
+void initTotalTime() {
+  totalTime = WAIT_FOR_HEAT_TIME + PRE_HEAT_TIME + HEAT_TIME + WAIT_FOR_BLOW_TIME + COLD_SYSTEM_TIME;
+}
 
 void updateDisplay(int time) {
   for (int i = 0; i < time; i++) {

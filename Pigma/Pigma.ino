@@ -86,14 +86,18 @@ void loop() {
     }
   }
 
+  initTotalTime();
+
   totalTime *= selectPosition;
 
   for (int i = 1; selectPosition >= i; i++) {
     sequence();
   }
 
-  delay(1000);
+  updateDisplay(1);
+
   finishText();
+
   delay(5000);
 
   next = false;
