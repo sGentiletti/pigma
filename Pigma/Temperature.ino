@@ -3,7 +3,7 @@
 
 int SENSOR = 7;
 int MAX_TEMPERATURE = 80;
-int MIN_TEMPERATURE = 40;
+int MIN_TEMPERATURE = 10;
 
 DHT dht(SENSOR, DHT22);
 
@@ -36,11 +36,8 @@ ISR(TIMER2_OVF_vect) {                        // Esto se ejecuta cada 32.64mS. (
     resetSoftware();
   }
 
-  if (interruptionTime - lastInterruption > 1000) {  // Esto se ejecuta cada 1s
+  if (interruptionTime - lastInterruption > 5) {  // Esto se ejecuta cada 1s
     int temperature = getTemperature();
-
-    Serial.print("Temperatura: ");
-    Serial.println(temperature);
 
     if (temperature >= MAX_TEMPERATURE) {
       abortSequenceDueToOverheating();

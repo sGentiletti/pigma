@@ -10,4 +10,22 @@ void twoCycleText();
 
 void threeCycleText();
 
+void overheatingText();
+
+void resistanceIssueText();
+
+void errorGenericText();
+
+void restartText();
+
+void preHeatText();
+
+void dissectText();
+
+void coldSystemText();
+
 void finishText();
+
+void temperatureText(int temp);
+
+void timeText(int totalTime);

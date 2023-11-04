@@ -1,10 +1,11 @@
 #include <EEPROM.h>
-
 #include "Display.h"
 #include "Encoder.h"
 #include "Sequence.h"
 
+volatile int totalTime;
 volatile int actualPosition = 0;
+
 int previousPosition = 0;
 int selectPosition = 0;
 
@@ -13,9 +14,7 @@ volatile int error;
 
 boolean next = false;
 
-
 void setup() {
-  Serial.begin(9600);
   initDisplay();
   initEncoder();
   error = EEPROM.read(addressMemory);
@@ -28,24 +27,21 @@ void loop() {
   if (error != 0) {
     switch (error) {
       case 1:
-        Serial.println("Error 1");
+        overheatingText();
         break;
       case 2:
-        Serial.println("Error 2");
-        break;
-      case 3:
-        Serial.println("Error 3");
+        resistanceIssueText();
         break;
       default:
-        Serial.println("Error Desconocido");
+        errorGenericText();
     }
 
     while (error != 0) {
       if (getButtonStatus()) {
-        Serial.println("Reiniciando...");
+        restartText();
         EEPROM.write(addressMemory, 0);
         error = EEPROM.read(addressMemory);
-        delay(5000);
+        delay(3000);
       }
     }
   }
@@ -92,10 +88,13 @@ void loop() {
     }
   }
 
+  totalTime *= selectPosition;
+
   for (int i = 1; selectPosition >= i; i++) {
     sequence();
   }
 
+  delay(1000);
   finishText();
   delay(5000);
 
