@@ -48,7 +48,6 @@ void loop() {
 
   while (!next) {
     if (getButtonStatus()) {
-      delay(500);  // Previene lecturas erroneas
       selectPosition = actualPosition;
       next = true;
     }
@@ -80,7 +79,6 @@ void loop() {
 
     if (actualPosition != 0 && getButtonStatus()) {
       disableEncoderInterruption();
-      delay(500);  // Previene lecturas erroneas
       selectPosition = actualPosition;
       next = true;
     }

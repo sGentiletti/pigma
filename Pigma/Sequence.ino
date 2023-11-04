@@ -21,8 +21,8 @@ void sequence() {
   startBlower();
   updateDisplay(WAIT_FOR_HEAT_TIME);  // Wait until start heating
   startHeater();
-  dissectText();
   updateDisplay(PRE_HEAT_TIME);  // Pre-heating time
+  dissectText();
   isHeatingOn = true;
   updateDisplay(HEAT_TIME);  // Heating time
   stopHeater();

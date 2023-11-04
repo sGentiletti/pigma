@@ -28,15 +28,14 @@ ISR(TIMER2_OVF_vect) {                        // Esto se ejecuta cada 32.64mS. (
 
   // --- Resistencia Prendia ---
 
-  unsigned long interruptionTime = millis();
-
   if (getButtonStatus()) {  // Cancelar proceso al tocar el pulsador
-    delay(500);             // Previene lecturas erroneas
     abortSequence();
     resetSoftware();
   }
 
-  if (interruptionTime - lastInterruption > 5) {  // Esto se ejecuta cada 1s
+  unsigned long interruptionTime = millis();
+
+  if (interruptionTime - lastInterruption > 1000) {  // Esto se ejecuta cada 1s
     int temperature = getTemperature();
 
     if (temperature >= MAX_TEMPERATURE) {
