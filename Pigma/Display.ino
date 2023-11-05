@@ -2,9 +2,9 @@
 #include <LCD.h>                // libreria para funciones de LCD
 #include <LiquidCrystal_I2C.h>  // libreria para LCD por I2C
 
-LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7);  // DIR, E, RW, RS, D4, D5, D6, D7
+#define LCD_PIN 3
 
-int LCD_PIN = 3;
+LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7);  // DIR, E, RW, RS, D4, D5, D6, D7
 
 byte heart[8] = {
   0b00000,

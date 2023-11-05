@@ -3,20 +3,23 @@
 #include "Encoder.h"
 #include "Sequence.h"
 
-volatile int totalTime;
-volatile int addressMemory = 0;  // Address EEPROM
+volatile int totalSequencesTime;
+volatile int memoryAddress = 0;   // EEPROM Address
+volatile int actualPosition = 0;  // Encoder interruption
+
+volatile boolean isHeatingOn = false;
 
 int error;
-int actualPosition = 0;
 int previousPosition = 0;
 int selectPosition = 0;
+
 boolean next = false;
 
 void setup() {
   initDisplay();
   initEncoder();
   initSequence();
-  error = EEPROM.read(addressMemory);
+  error = EEPROM.read(memoryAddress);
 }
 
 void loop() {
@@ -37,8 +40,8 @@ void loop() {
     while (error != 0) {
       if (getButtonStatus()) {
         restartText();
-        EEPROM.write(addressMemory, 0);
-        error = EEPROM.read(addressMemory);
+        EEPROM.write(memoryAddress, 0);
+        error = 0;
         delay(3000);
       }
     }
@@ -84,11 +87,9 @@ void loop() {
     }
   }
 
-  initTotalTime();
+  totalSequencesTime = getSequenceTime() * selectPosition;
 
-  totalTime *= selectPosition;
-
-  for (int i = 1; selectPosition >= i; i++) {
+  for (int i = 0; selectPosition > i; i++) {
     sequence();
   }
 
@@ -96,7 +97,7 @@ void loop() {
 
   finishText();
 
-  delay(5000);
+  delay(3000);
 
   next = false;
   actualPosition = 0;

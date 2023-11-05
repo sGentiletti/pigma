@@ -1,4 +1,4 @@
-int BLOWER_PIN = 8;
+#define BLOWER_PIN 8
 
 void initBlower() {
   pinMode(BLOWER_PIN, OUTPUT);

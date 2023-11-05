@@ -2,13 +2,12 @@
 #include "Blower.h"
 #include "Heater.h"
 
-volatile boolean isHeatingOn = false;
-
-int WAIT_FOR_HEAT_TIME = 15;  // In seconds
-int PRE_HEAT_TIME = 15;       // In seconds
-int HEAT_TIME = 1200;         // In seconds
-int WAIT_FOR_BLOW_TIME = 15;  // In seconds
-int COLD_SYSTEM_TIME = 120;   // In seconds
+#define WAIT_FOR_HEAT_TIME 15  // In seconds
+#define PRE_HEAT_TIME 15       // In seconds
+#define HEAT_TIME 1200         // In seconds
+#define WAIT_FOR_BLOW_TIME 15  // In seconds
+#define COLD_SYSTEM_TIME 120   // In seconds
+#define SEQUENCE_TIME WAIT_FOR_HEAT_TIME + PRE_HEAT_TIME + HEAT_TIME + WAIT_FOR_BLOW_TIME + COLD_SYSTEM_TIME
 
 void initSequence() {
   initTemperature();
@@ -35,16 +34,16 @@ void sequence() {
 
 void (*resetSoftware)(void) = 0;
 
-void initTotalTime() {
-  totalTime = WAIT_FOR_HEAT_TIME + PRE_HEAT_TIME + HEAT_TIME + WAIT_FOR_BLOW_TIME + COLD_SYSTEM_TIME;
+int getSequenceTime() {
+  return SEQUENCE_TIME;
 }
 
 void updateDisplay(int time) {
   for (int i = 0; i < time; i++) {
-    timeText(totalTime);
+    timeText(totalSequencesTime);
     temperatureText(getTemperature());
     delay(1000);
-    totalTime--;
+    totalSequencesTime--;
   }
 }
 
@@ -55,12 +54,12 @@ void abortSequence() {
 
 void abortSequenceDueToOverheating() {
   abortSequence();
-  EEPROM.write(addressMemory, 1);
+  EEPROM.write(memoryAddress, 1);
   resetSoftware();
 }
 
 void abortSequenceDueToResistanceIssue() {
   abortSequence();
-  EEPROM.write(addressMemory, 2);
+  EEPROM.write(memoryAddress, 2);
   resetSoftware();
 }

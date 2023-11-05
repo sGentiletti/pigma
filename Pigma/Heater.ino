@@ -1,4 +1,4 @@
-int HEATER_PIN = 9;
+#define HEATER_PIN 9
 
 void initHeater() {
   pinMode(HEATER_PIN, OUTPUT);

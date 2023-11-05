@@ -1,6 +1,6 @@
-int BUTTON_PIN = 2;
-int CW_PIN = 3;
-int CCW_PIN = 4;
+#define BUTTON_PIN 2
+#define CW_PIN 3
+#define CCW_PIN 4
 
 void initEncoder() {
   pinMode(BUTTON_PIN, INPUT_PULLUP);

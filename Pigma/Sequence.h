@@ -2,9 +2,9 @@ void initSequence();
 
 void sequence();
 
-void abortSequence();
+int getSequenceTime();
 
-void initTotalTime();
+void abortSequence();
 
 void abortSequenceDueToOverheating();
 
