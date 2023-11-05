@@ -1,17 +1,19 @@
 #include <DHT.h>
 #include <DHT_U.h>
 
-int SENSOR_TEMPERATURE_PIN = 7;
-int MAX_TEMPERATURE = 80;
-int MIN_TEMPERATURE = 0;
+#define SENSOR_TEMPERATURE_PIN 7
+#define MAX_TEMPERATURE 80
+#define MIN_TEMPERATURE 0
 
 DHT dht(SENSOR_TEMPERATURE_PIN, DHT22);
 
 void initTemperature() {
-  SREG = (SREG & 0b01111111);               // Desabilitar interrupciones
-  TIMSK2 = TIMSK2 | 0b00000001;             // Habilita la interrupcion por desbordamiento
-  TCCR2B = 0b00000111;                      // Configura preescala para que FT2 sea de 7812.5Hz
-  SREG = (SREG & 0b01111111) | 0b10000000;  // Habilitar interrupciones
+  noInterrupts();
+  TCCR1A = 0;              // Configuración inicial del Timer 1
+  TCCR1B = 0;              // Detener el Timer 1
+  TCCR1B |= (1 << CS11);   // Configura preescala a 256 para el Timer 1 (7812.5Hz)
+  TIMSK1 |= (1 << TOIE1);  // Habilita la interrupción por desbordamiento del Timer 1
+  interrupts();
   dht.begin();
 }
 
@@ -19,7 +21,7 @@ int getTemperature() {
   return dht.readTemperature();
 }
 
-ISR(TIMER2_OVF_vect) {                        // Esto se ejecuta cada 32.64mS. (Es una interrupcion por clock)
+ISR(TIMER1_OVF_vect) {                        // Esto se ejecuta cada 32.64mS. (Es una interrupcion por desbordamiento de clock)
   static unsigned long lastInterruption = 0;  // Esta variable se instancia una unica vez
 
   if (!isHeatingOn) {  // Resistencia apagada entonces salir sin hacer nada
