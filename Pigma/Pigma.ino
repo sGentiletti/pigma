@@ -7,8 +7,6 @@ volatile int totalSequencesTime;
 volatile int memoryAddress = 0;   // EEPROM Address
 volatile int actualPosition = 0;  // Encoder interruption
 
-volatile boolean isHeatingOn = false;
-
 int error;
 int previousPosition = 0;
 int selectPosition = 0;
