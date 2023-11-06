@@ -20,6 +20,14 @@ void disableEncoderInterruption() {
   detachInterrupt(digitalPinToInterrupt(CW_PIN));
 }
 
+void enableAbortInterruption() {
+  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), abort, LOW);
+}
+
+void disableAbortInterruption() {
+  detachInterrupt(digitalPinToInterrupt(BUTTON_PIN));
+}
+
 void encoder() {
   static unsigned long lastInterruption = 0;  // Esta variable se instancia una unica vez
   unsigned long interruptionTime = millis();
@@ -33,4 +41,8 @@ void encoder() {
     actualPosition = min(3, max(1, actualPosition));
     lastInterruption = interruptionTime;
   }
+}
+
+void abort() {
+  abortSequence();
 }

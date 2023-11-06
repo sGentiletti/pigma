@@ -3,21 +3,26 @@
 #include "Encoder.h"
 #include "Sequence.h"
 
-volatile int totalSequencesTime;
-volatile int memoryAddress = 0;   // EEPROM Address
-volatile int actualPosition = 0;  // Encoder interruption
+#define MEMORY_ADRESS 0  // EEPROM Address
+
+volatile int actualPosition;
 
 int error;
-int previousPosition = 0;
-int selectPosition = 0;
-
-boolean next = false;
+int previousPosition;
+int selectPosition;
+int totalSequencesTime;
+boolean next;
 
 void setup() {
   initDisplay();
   initEncoder();
   initSequence();
-  error = EEPROM.read(memoryAddress);
+
+  error = EEPROM.read(MEMORY_ADRESS);
+  actualPosition = 0;
+  previousPosition = 0;
+  selectPosition = 0;
+  next = false;
 }
 
 void loop() {
@@ -38,7 +43,7 @@ void loop() {
     while (error != 0) {
       if (getButtonStatus()) {
         restartText();
-        EEPROM.write(memoryAddress, 0);
+        EEPROM.write(MEMORY_ADRESS, 0);
         error = 0;
         delay(3000);
       }
