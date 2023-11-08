@@ -15,6 +15,8 @@ boolean next;
 
 void setup() {
   initDisplay();
+  initLed();
+  initBuzzer();
   initEncoder();
   initSequence();
 
@@ -39,6 +41,8 @@ void loop() {
       default:
         errorGenericText();
     }
+    setLedToRed();
+    alertSound();
 
     while (error != 0) {
       if (getButtonStatus()) {
@@ -92,13 +96,16 @@ void loop() {
 
   totalSequencesTime = getSequenceTime() * selectPosition;
 
+  setLedToGreen();
+
   for (int i = 0; selectPosition > i; i++) {
     sequence();
   }
 
   updateDisplay(1);
-
   finishText();
+  finishSound();
+  ledOff();
 
   delay(3000);
 

@@ -2,8 +2,6 @@
 #include <LCD.h>                // libreria para funciones de LCD
 #include <LiquidCrystal_I2C.h>  // libreria para LCD por I2C
 
-#define LCD_PIN 3
-
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7);  // DIR, E, RW, RS, D4, D5, D6, D7
 
 byte heart[8] = {
@@ -29,9 +27,9 @@ byte arrowUp[8] = {
 };
 
 void initDisplay() {
-  lcd.setBacklightPin(LCD_PIN, POSITIVE);  // puerto P3 de PCF8574 como positivo
-  lcd.setBacklight(HIGH);                  // habilita iluminacion posterior de LCD
-  lcd.begin(16, 2);                        // 16 columnas por 2 lineas para LCD 1602A
+  lcd.setBacklightPin(3, POSITIVE);  // puerto P3 de PCF8574 como positivo
+  lcd.setBacklight(HIGH);            // habilita iluminacion posterior de LCD
+  lcd.begin(16, 2);                  // 16 columnas por 2 lineas para LCD 1602A
   lcd.createChar(0, heart);
   lcd.createChar(1, arrowUp);
   lcd.clear();

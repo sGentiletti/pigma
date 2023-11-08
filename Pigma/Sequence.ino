@@ -2,14 +2,14 @@
 #include "Blower.h"
 #include "Heater.h"
 
-#define MAX_TEMPERATURE 80
-#define MIN_TEMPERATURE 0
+#define MAX_TEMPERATURE 79
+#define MIN_TEMPERATURE 35
 
 #define WAIT_FOR_HEAT_TIME 15  // In seconds
 #define PRE_HEAT_TIME 30       // In seconds
-#define HEAT_TIME 120          // In seconds
+#define HEAT_TIME 900          // In seconds
 #define WAIT_FOR_BLOW_TIME 15  // In seconds
-#define COLD_SYSTEM_TIME 30    // In seconds
+#define COLD_SYSTEM_TIME 120   // In seconds
 #define SEQUENCE_TIME WAIT_FOR_HEAT_TIME + PRE_HEAT_TIME + HEAT_TIME + WAIT_FOR_BLOW_TIME + COLD_SYSTEM_TIME
 
 int temperature;
