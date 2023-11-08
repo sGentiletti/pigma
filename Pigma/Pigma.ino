@@ -12,6 +12,7 @@ int previousPosition;
 int selectPosition;
 int totalSequencesTime;
 boolean next;
+boolean isFirstStart;
 
 void setup() {
   initDisplay();
@@ -21,10 +22,11 @@ void setup() {
   initSequence();
 
   error = EEPROM.read(MEMORY_ADRESS);
-  actualPosition = 0;
+  actualPosition = 1;
   previousPosition = 0;
   selectPosition = 0;
   next = false;
+  isFirstStart = true;
 }
 
 void loop() {
@@ -54,11 +56,24 @@ void loop() {
     }
   }
 
-  pigmaText();
+  if (isFirstStart) {
+    pigmaText();
+
+    while (!next) {
+      if (getButtonStatus()) {
+        delay(500);
+        next = true;
+      }
+    }
+    isFirstStart = false;
+    next = false;
+  }
+
+  grateText();
 
   while (!next) {
     if (getButtonStatus()) {
-      selectPosition = actualPosition;
+      delay(500);
       next = true;
     }
   }
@@ -66,6 +81,15 @@ void loop() {
   next = false;
 
   encoderText();
+
+  while (!next) {
+    if (getButtonStatus()) {
+      delay(500);
+      next = true;
+    }
+  }
+
+  next = false;
 
   while (!next) {
     enableEncoderInterruption();
@@ -94,6 +118,8 @@ void loop() {
     }
   }
 
+  next = false;
+
   totalSequencesTime = getSequenceTime() * selectPosition;
 
   setLedToGreen();
@@ -107,9 +133,14 @@ void loop() {
   finishSound();
   ledOff();
 
-  delay(3000);
+  while (!next) {
+    if (getButtonStatus()) {
+      delay(500);
+      next = true;
+    }
+  }
 
   next = false;
-  actualPosition = 0;
+  actualPosition = 1;
   previousPosition = 0;
 }

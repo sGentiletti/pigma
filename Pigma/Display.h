@@ -2,6 +2,8 @@ void initDisplay();
 
 void pigmaText();
 
+void grateText();
+
 void encoderText();
 
 void oneCycleText();

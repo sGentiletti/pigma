@@ -16,13 +16,24 @@ byte heart[8] = {
 };
 
 byte arrowUp[8] = {
+  0b00000,
+  0b00000,
+  0b00000,
   0b00100,
   0b01110,
-  0b10101,
+  0b11111,
+  0b00000,
+  0b00000
+};
+
+byte arrowRight[8] = {
+  0b00000,
   0b00100,
+  0b00110,
+  0b00111,
+  0b00110,
   0b00100,
-  0b00100,
-  0b00100,
+  0b00000,
   0b00000
 };
 
@@ -32,6 +43,7 @@ void initDisplay() {
   lcd.begin(16, 2);                  // 16 columnas por 2 lineas para LCD 1602A
   lcd.createChar(0, heart);
   lcd.createChar(1, arrowUp);
+  lcd.createChar(2, arrowRight);
   lcd.clear();
 }
 
@@ -42,17 +54,32 @@ void pigmaText() {
   pigma += (char)0;
 
   lcd.clear();
-  lcd.setCursor(2, 0);
+  lcd.setCursor(1, 0);
   lcd.print(pigma);
-  lcd.setCursor(5, 1);
+  lcd.setCursor(6, 1);
   lcd.print(pigma);
+}
+
+void grateText() {
+  lcd.clear();
+  lcd.print("Rallar material");
+  lcd.setCursor(0, 1);
+  lcd.print("y asegurar");
+  lcd.setCursor(15, 1);
+  String arrow = "";
+  arrow += (char)2;
+  lcd.print(arrow);
 }
 
 void encoderText() {
   lcd.clear();
-  lcd.print("Gira y seleciona");
+  lcd.print("Selecciona cant.");
   lcd.setCursor(0, 1);
-  lcd.print("cant. de ciclos");
+  lcd.print("de ciclos");
+  lcd.setCursor(15, 1);
+  String arrow = "";
+  arrow += (char)2;
+  lcd.print(arrow);
 }
 
 void oneCycleText() {
@@ -81,16 +108,24 @@ void threeCycleText() {
 
 void overheatingText() {
   lcd.clear();
-  lcd.print("Algo salio mal");
+  lcd.print("TEMPERATURA ALTA");
   lcd.setCursor(0, 1);
-  lcd.print("excesp temp.  :(");
+  lcd.print("Reiniciar");
+  lcd.setCursor(15, 1);
+  String arrow = "";
+  arrow += (char)2;
+  lcd.print(arrow);
 }
 
 void resistanceIssueText() {
   lcd.clear();
-  lcd.print("Temperatura baja");
+  lcd.print("TEMPERATURA BAJA");
   lcd.setCursor(0, 1);
-  lcd.print("cambiar resist.");
+  lcd.print("Reiniciar");
+  lcd.setCursor(15, 1);
+  String arrow = "";
+  arrow += (char)2;
+  lcd.print(arrow);
 }
 
 void errorGenericText() {
@@ -107,17 +142,17 @@ void restartText() {
 
 void preHeatText() {
   lcd.clear();
-  lcd.print("Calentando:");
+  lcd.print("Calentando...");
 }
 
 void dissectText() {
   lcd.setCursor(0, 0);
-  lcd.print("Disecando: ");
+  lcd.print("Secando...   ");
 }
 
 void coldSystemText() {
   lcd.setCursor(0, 0);
-  lcd.print("Enfriando: ");
+  lcd.print("Enfriando... ");
 }
 
 void finishText() {
@@ -125,6 +160,10 @@ void finishText() {
   lcd.print("Proceso");
   lcd.setCursor(0, 1);
   lcd.print("finalizado");
+  lcd.setCursor(15, 1);
+  String arrow = "";
+  arrow += (char)2;
+  lcd.print(arrow);
 }
 
 void temperatureText(int temp) {
