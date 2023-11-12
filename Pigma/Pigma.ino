@@ -1,6 +1,9 @@
 #include <EEPROM.h>
 #include "Display.h"
 #include "Encoder.h"
+#include "Temperature.h"
+#include "Blower.h"
+#include "Heater.h"
 #include "Sequence.h"
 
 #define MEMORY_ADRESS 0  // EEPROM Address
@@ -19,7 +22,9 @@ void setup() {
   initLed();
   initBuzzer();
   initEncoder();
-  initSequence();
+  initTemperature();
+  initBlower();
+  initHeater();
 
   error = EEPROM.read(MEMORY_ADRESS);
   actualPosition = 1;
@@ -55,6 +60,8 @@ void loop() {
       }
     }
   }
+
+  ledOff();
 
   if (isFirstStart) {
     pigmaText();
@@ -131,7 +138,6 @@ void loop() {
   updateDisplay(1);
   finishText();
   finishSound();
-  ledOff();
 
   while (!next) {
     if (getButtonStatus()) {

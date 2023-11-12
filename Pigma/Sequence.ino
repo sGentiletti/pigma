@@ -1,7 +1,3 @@
-#include "Temperature.h"
-#include "Blower.h"
-#include "Heater.h"
-
 #define MAX_TEMPERATURE 79
 #define MIN_TEMPERATURE 35
 
@@ -12,15 +8,9 @@
 #define COLD_SYSTEM_TIME 120   // In seconds
 #define SEQUENCE_TIME WAIT_FOR_HEAT_TIME + PRE_HEAT_TIME + HEAT_TIME + WAIT_FOR_BLOW_TIME + COLD_SYSTEM_TIME
 
-int temperature;
+int temperature = getTemperature();
 boolean senseMaxTemp = false;
 boolean senseMinTemp = false;
-
-void initSequence() {
-  initTemperature();
-  initBlower();
-  initHeater();
-}
 
 void sequence() {
   preHeatText();
@@ -34,12 +24,14 @@ void sequence() {
   enableAbortInterruption();
   updateDisplay(HEAT_TIME);  // Heating time
   stopHeater();
+  delay(500);
   disableAbortInterruption();
   senseMinTemp = false;
   senseMaxTemp = false;
   coldSystemText();
   updateDisplay(WAIT_FOR_BLOW_TIME);  // Wait until stop blown
   stopBlower();
+  delay(500);
   updateDisplay(COLD_SYSTEM_TIME);  // Wait for cold the system
 }
 
@@ -52,6 +44,7 @@ int getSequenceTime() {
 void abortSequence() {
   stopBlower();
   stopHeater();
+  delay(500);
   resetSoftware();
 }
 
@@ -67,22 +60,27 @@ void abortSequenceDueToResistanceIssue() {
 
 void updateDisplay(int time) {
   for (int i = 0; i < time; i++) {
-    temperature = getTemperature();
 
-    timeText(totalSequencesTime);
-    temperatureText(temperature);
+    if (i % 2 == 0) {
+      temperature = getTemperature();
 
-    if (senseMaxTemp) {  // Sensar max temp
-      if (temperature >= MAX_TEMPERATURE) {
+      if (temperature <= 15) {
+        initTemperature();
+        temperature = getTemperature();
+      }
+
+      temperatureText(temperature);
+
+      if (senseMaxTemp && temperature >= MAX_TEMPERATURE) {  // Sensar max temp
         abortSequenceDueToOverheating();
       }
-    }
 
-    if (senseMinTemp) {  // Sensar min temp
-      if (temperature < MIN_TEMPERATURE) {
+      if (senseMinTemp && temperature < MIN_TEMPERATURE) {  // Sensar min temp
         abortSequenceDueToResistanceIssue();
       }
     }
+
+    timeText(totalSequencesTime);
 
     delay(1000);
 

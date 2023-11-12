@@ -1,5 +1,3 @@
-void initSequence();
-
 void sequence();
 
 int getSequenceTime();
