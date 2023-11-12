@@ -64,6 +64,10 @@ void updateDisplay(int time) {
     if (i % 2 == 0) {
       temperature = getTemperature();
 
+      if (temperature <= 15 || isnan(temperature)) {
+        resetTemperature();
+      }
+
       temperatureText(temperature);
 
       if (senseMaxTemp && temperature >= MAX_TEMPERATURE) {  // Sensar max temp

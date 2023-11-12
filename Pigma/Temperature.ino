@@ -6,10 +6,16 @@
 DHT dht(SENSOR_TEMPERATURE_PIN, DHT22);
 
 void initTemperature() {
-  pinMode(SENSOR_TEMPERATURE_PIN, INPUT);
+  digitalWrite(SENSOR_TEMPERATURE_PIN, HIGH);
   dht.begin();
 }
 
 int getTemperature() {
   return dht.readTemperature();
+}
+
+void resetTemperature() {
+  digitalWrite(SENSOR_TEMPERATURE_PIN, LOW);
+  delay(500);
+  digitalWrite(SENSOR_TEMPERATURE_PIN, HIGH);
 }
